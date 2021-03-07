@@ -1,0 +1,8 @@
+.idea
+*.iml
+out
+target
+src/test
+src/META-INF
+*.png
+*.txt
