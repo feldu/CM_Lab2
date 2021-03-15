@@ -38,7 +38,7 @@ public class IntervalChecker {
         double step = (b - a) / Series.STEP_CNT;
         boolean lessThanOne = true;
         for (double i = a; i <= b; i += step) {
-            if (function.apply(i) >= 1) {
+            if (Math.abs(function.apply(i)) >= 1) {
                 log.info("f({})={}", i, function.apply(i));
                 lessThanOne = false;
             }
