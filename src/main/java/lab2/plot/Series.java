@@ -13,6 +13,8 @@ public class Series {
     private String seriesName;
     private List<Double> xData = new ArrayList<>();
     private List<Double> yData = new ArrayList<>();
+    public static final int STEP_CNT = 50;
+
 
     public Series(String seriesName) {
         this.seriesName = seriesName;
@@ -20,7 +22,7 @@ public class Series {
 
     public Series(String seriesName, Function<Double, Double> function, double left, double right) {
         this.seriesName = seriesName;
-        double step = (right - left) / 20;
+        double step = (right - left) / STEP_CNT;
         //add padding step*5
         for (double i = left - step * 5; i <= right + step * 5; i += step) {
             xData.add(i);

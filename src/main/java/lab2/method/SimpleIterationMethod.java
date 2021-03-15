@@ -63,7 +63,7 @@ public class SimpleIterationMethod implements SolvingMethod {
     private void drawFi(Function<Double, Double> fi_minus_x, double a, double b) {
         Series fi = new Series("Ф(x)");
         Series x = new Series("y=x", value -> value, a, b);
-        double step = (b - a) / 20;
+        double step = (b - a) / Series.STEP_CNT;
         //make plot with padding step*5
         for (double i = a - step * 5; i <= b + step * 5; i += step) {
             fi.getXData().add(i);
