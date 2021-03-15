@@ -25,7 +25,7 @@ public class SimpleIterationMethod implements SolvingMethod {
         log.info("Lambda={}", lambda);
         Function<Double, Double> fi_minus_x = function.getFunction().andThen((df) -> df * lambda);
         drawFi(fi_minus_x, a, b);
-        lastX = deriveFunc.apply(a) > deriveFunc.apply(b) ? a : b;
+        lastX = chooseInitialApproximation(a, b, function.getFunction().apply(a), function.getFunction().apply(b), deriveFunc);
         int i = 0;
         while (true) {
             x = fi(fi_minus_x, lastX);
@@ -71,6 +71,25 @@ public class SimpleIterationMethod implements SolvingMethod {
         }
         Plot plot = new Plot("Метод простой итерации", fi, x);
         plot.save("./Fi");
+    }
+
+    private double chooseInitialApproximation(double a, double b, double fa, double fb, Function<Double, Double> deriveFunc) {
+        double lastX;
+        Function<Double, Double> secondDeriveFunc = Derivatives.derive(deriveFunc);
+        double d2fa_dx2 = secondDeriveFunc.apply(a);
+        double d2fb_dx2 = secondDeriveFunc.apply(b);
+        log.info("f''(a): {}; f''(b): {}.", d2fa_dx2, d2fb_dx2);
+        if (d2fa_dx2 * fa > 0) {
+            lastX = a;
+            log.info("A={} as x chosen", a);
+        } else if (d2fb_dx2 * fb > 0) {
+            lastX = b;
+            log.info("B={} as x chosen", b);
+        } else {
+            lastX = a;
+            log.warn("The fast convergence condition is not satisfied. Chosen a={}, as x", a);
+        }
+        return lastX;
     }
 
     //Костыль
