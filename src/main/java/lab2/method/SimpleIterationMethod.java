@@ -47,7 +47,7 @@ public class SimpleIterationMethod implements SolvingMethod {
         double lambda = -1 / Math.max(deriveFunc.apply(a), deriveFunc.apply(b)); //mb abs???
         Function<Double, Double> dfi_dx = deriveFunc.andThen((df) -> df * lambda).andThen(value -> value + 1);
         if (!intervalChecker.functionLessThanOne(dfi_dx, a, b)) {
-            log.warn("Fi'(x) has interval with values greater than 1");
+            log.warn("|Fi'(x)| has interval with values greater than 1");
         }
         drawPlot(function);
         new Plot("Ф'(x)", new Series("Ф'(x)", dfi_dx, a, b)).save("./dFi_dx");
